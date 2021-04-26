@@ -366,6 +366,9 @@ create_devices_for_subsystem (ply_device_manager_t *manager,
                                 if (node != NULL) {
                                         ply_trace ("found node %s", node);
                                         found_device = create_devices_for_udev_device (manager, device);
+                                        if (!(strcmp (node, "/dev/fb0")))
+                                                found_device = create_devices_for_udev_device (manager, device);
+                                        else ply_trace ("framebuffer other than fb0 found - ignoring");
                                 }
                         } else {
                                 ply_trace ("device doesn't have a devices tag");
@@ -437,7 +440,7 @@ on_udev_event (ply_device_manager_t *manager)
 
                 subsystem = udev_device_get_subsystem (device);
 
-                if (strcmp (subsystem, SUBSYSTEM_DRM) == 0) {
+                if (strcmp (subsystem, SUBSYSTEM_DRM) == 0 || strcmp (subsystem, SUBSYSTEM_FRAME_BUFFER) == 0) {
                         if (manager->local_console_managed && manager->local_console_is_text)
                                 ply_trace ("ignoring since we're already using text splash for local console");
                         else
