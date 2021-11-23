@@ -12,5 +12,5 @@ ExecStart=/usr/sbin/plymouthd --mode=boot --pid-file=/var/run/plymouth/pid --att
 ExecStartPost=-/usr/bin/plymouth show-splash
 Type=forking
 RemainAfterExit=yes
-KillMode=none
+KillMode=mixed
 SendSIGKILL=no
